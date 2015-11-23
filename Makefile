@@ -2,9 +2,8 @@ PROJECT=apns
 
 CONFIG?=priv/app.config
 
-DEPS = jiffy sync
+DEPS = jiffy
 dep_jiffy = git https://github.com/davisp/jiffy 0.14.3
-dep_sync = git https://github.com/inaka/sync.git 0.1
 
 TEST_DEPS = mock_apns
 dep_mock_apns = git https://github.com/tomekowal/mockapn.git 4b4c1fd21706060eba2142cc405ce7c8b3396513
@@ -21,7 +20,7 @@ CT_SUITES = apns
 CT_OPTS = -cover test/apns.coverspec -vvv -erl_args -config test/app.config
 
 shell: app
-	erl -pa ebin -pa deps/*/ebin -s crypto -s inets -s ssl -s sync -s apns -config ${CONFIG}
+	erl -pa ebin -pa deps/*/ebin -s crypto -s inets -s ssl -s apns -config ${CONFIG}
 
 erldocs: app
 	erldocs . -o doc/
