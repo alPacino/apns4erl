@@ -1,7 +1,7 @@
 %% @doc Apple Push Notification Server for Erlang
 -module(apns).
 -author('Brujo Benavides <elbrujohalcon@inaka.net>').
--vsn('1.0.2').
+-vsn('1.0.6').
 
 -include("apns.hrl").
 -include("localized.hrl").
@@ -218,7 +218,7 @@ send_message(
 %% @doc  Generates an "unique" and valid message Id
 -spec message_id() -> binary().
 message_id() ->
-  {_, _, MicroSecs} = erlang:now(),
+  {_, _, MicroSecs} = os:timestamp(),
   Secs = calendar:datetime_to_gregorian_seconds(calendar:universal_time()),
   First = Secs rem 65536,
   Last = MicroSecs rem 65536,
@@ -286,4 +286,6 @@ default_connection() ->
         get_env(feedback_port, DefaultConn#apns_connection.feedback_port)
     , expires_conn =
         get_env(expires_conn,  DefaultConn#apns_connection.expires_conn)
+    , extra_ssl_opts =
+        get_env(extra_ssl_opts,  DefaultConn#apns_connection.extra_ssl_opts)
     }.
